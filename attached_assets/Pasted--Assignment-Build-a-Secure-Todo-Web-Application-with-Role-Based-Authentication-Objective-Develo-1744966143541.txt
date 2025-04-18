@@ -1,0 +1,304 @@
+📝 Assignment: Build a Secure Todo Web Application with Role-Based Authentication
+Objective
+Develop a full-stack web application featuring user authentication (login/registration), role-based access control, and todo management functionality. The frontend will be built using React.js with Tailwind CSS, and the backend will use Express.js/Node.js with MongoDB. This assignment tests your ability to build a secure, functional, and maintainable application.
+
+Requirements
+
+1. User Authentication
+Registration:
+Allow users to sign up with an email, username, and password.
+
+
+Validate email format and enforce a minimum password length of 8 characters.
+
+
+Securely hash passwords using bcrypt before storing them in the database.
+
+
+Assign a default role of "user" to each registered user.
+
+
+Login:
+Enable login with either email or username and password.
+
+
+Return a JWT (JSON Web Token) upon successful login for session management.
+
+
+Include the user’s role in the JWT payload for access control.
+
+
+Security & Role-Based Access:
+Protect all todo-related routes to ensure only authenticated users can access them.
+
+
+Implement role-based authorization:
+
+
+Only "admin" users can access certain routes or perform actions (see section 2).
+
+
+Middleware should verify both authentication (JWT) and role (if needed).
+
+
+
+2. Todo Functionality
+Create Todo:
+Allow users to create a todo with:
+
+
+Title (required, max 100 characters)
+
+
+Description (optional, max 500 characters)
+
+
+Due Date (optional, stored as a date)
+
+
+Category (dropdown: "Urgent" or "Non-Urgent")
+
+
+Todo is automatically linked to the authenticated user.
+
+
+View Todos:
+"user" role: can view only their own todos.
+
+
+"admin" role: can view todos from all users (admin dashboard or API endpoint).
+
+
+Edit Todo:
+"user" role: can edit only their own todos.
+
+
+"admin" role: can edit any todo.
+
+
+Delete Todo:
+"user" role: can delete only their own todos.
+
+
+"admin" role: can delete any todo.
+
+
+Data Association:
+Ensure each todo is linked to the creating user using a MongoDB ObjectId reference.
+
+
+
+3. Role-Based Access Control (RBAC)
+Add a role field to the user model: user (default) or admin.
+
+
+Store the role in the JWT and validate it using middleware.
+
+
+Create middleware to protect routes based on role:
+
+
+Example: Only admin users can access /api/admin/* endpoints.
+
+
+Admin-Specific Features (Optional but Recommended for Bonus Points):
+Admin Dashboard UI to:
+
+
+View all users
+
+
+View all todos
+
+
+Optionally change user roles (e.g., promote to admin)
+
+
+
+4. Database
+Use MongoDB with Mongoose.
+Collections:
+users: email, username, hashed password, role
+
+
+todos: title, description, due date, category, completed status, user (ObjectId reference)
+
+
+Indexing:
+Add indexes on frequently queried fields (e.g., user in todos, email in users).
+
+
+
+5. Frontend (React.js with Tailwind CSS)
+Pages:
+Login Page
+
+
+Registration Page
+
+
+Todo Dashboard
+
+
+"user" role: view and manage personal todos
+
+
+"admin" role: toggle between personal todos and all users’ todos
+
+
+Create/Edit Todo Page
+
+
+Admin Dashboard (Visible only to admin users):
+
+
+View all users
+
+
+View all todos
+
+
+Optional: promote/demote users
+
+
+Implementation Tips:
+Use React Hooks (useState, useEffect)
+
+
+Create reusable components (Button, Input, TodoCard)
+
+
+Conditionally render features based on the user's role (e.g., show admin dashboard link only to admins)
+
+
+Use Tailwind CSS for consistent and responsive styling
+
+
+
+6. Backend (Express.js/Node.js)
+Endpoints:
+Authentication:
+POST /api/auth/register: Register a new user (assign "user" role)
+
+
+POST /api/auth/login: Return JWT including user ID and role
+
+
+Todos:
+GET /api/todos:
+
+
+"user": return their todos only
+
+
+"admin": return all todos
+
+
+POST /api/todos: Create new todo (authenticated users only)
+
+
+PUT /api/todos/:id:
+
+
+"user": update own todos
+
+
+"admin": update any todo
+
+
+DELETE /api/todos/:id:
+
+
+"user": delete own todos
+
+
+"admin": delete any todo
+
+
+Admin (Role-Protected Routes):
+GET /api/admin/users: View all users (admin only)
+
+
+PATCH /api/admin/users/:id/role: Update a user’s role (optional)
+
+
+GET /api/admin/todos: View all todos (admin only)
+
+
+Middleware:
+JWT Authentication
+
+
+Role-based authorization
+
+
+Input validation (express-validator or Joi)
+
+
+Graceful error handling (e.g., 401 for unauthorized, 403 for forbidden)
+
+
+
+Technical Challenges (Bonus Points)
+Mark todos as "completed" and filter by completion
+
+
+Search/filter todos by title or category
+
+
+Add loading states (spinners) during API calls
+
+
+Unit test one backend endpoint using Jest
+
+
+Admin Dashboard with user management
+
+
+
+Deliverables
+Functional web app with full source code
+
+
+GitHub repository with:
+
+
+client/: Frontend code
+
+
+server/: Backend code
+
+
+README.md with:
+
+
+Project overview
+
+
+Setup instructions (MongoDB URI, JWT secret, etc.)
+
+
+How to run the app
+
+
+(Optional) Live deployment link
+
+
+
+Evaluation Criteria
+Functionality: Are all required and bonus features implemented?
+
+
+Security: Are authentication and role-based access implemented correctly?
+
+
+Code Quality: Is the code clean, readable, and modular?
+
+
+UI/UX: Is the interface intuitive, responsive, and styled well?
+
+
+Error Handling: Are invalid inputs, access violations, and edge cases handled?
+
+
+Bonus Features: Any extra functionality like search, filtering, admin dashboard, etc.
