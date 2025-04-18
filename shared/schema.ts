@@ -22,6 +22,7 @@ export const todos = pgTable("todos", {
   userId: integer("userId")
     .notNull()
     .references(() => users.id),
+  username: text("username").notNull(), // Added username field for MongoDB compatibility
 });
 
 // Insert schemas
@@ -37,7 +38,7 @@ export const insertTodoSchema = createInsertSchema(todos, {
   description: z.string().max(500, "Description must be less than 500 characters").optional().nullable(),
   dueDate: z.string().optional().nullable(),
   category: z.enum(["Urgent", "Non-Urgent"]),
-}).omit({ id: true });
+}).omit({ id: true, userId: true, username: true });
 
 // Custom login schema
 export const loginSchema = z.object({

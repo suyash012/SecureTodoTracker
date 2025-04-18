@@ -19,17 +19,25 @@ export const todoController = {
   // Create a new todo
   async createTodo(req: Request, res: Response) {
     try {
+      console.log('Create todo request body:', req.body);
+      console.log('User from request:', req.user);
+      
       // Validate request body
       const validatedData = insertTodoSchema.parse(req.body);
+      console.log('Validated data:', validatedData);
       
-      // Create todo with current user ID
+      // Create todo with current user ID and username
       const todo = await storage.createTodo({
         ...validatedData,
         userId: req.user!.id,
+        // Username will be set in the storage layer based on userId
       });
       
+      console.log('Created todo:', todo);
       res.status(201).json(todo);
     } catch (error) {
+      console.error('Error creating todo:', error);
+      
       if (error instanceof z.ZodError) {
         return res.status(400).json({ 
           message: "Validation failed", 
