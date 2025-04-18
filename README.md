@@ -192,13 +192,50 @@ The application comes with two default users:
      ```
 
 4. Start the development server:
+
+   **For Unix/Linux/Mac:**
    ```
    npm run dev
+   ```
+
+   **For Windows:**
+   ```
+   node start-dev.js
+   ```
+
+   **Alternative approach for all platforms (using cross-env):**
+   ```
+   npx cross-env NODE_ENV=development tsx server/index.ts
    ```
 
 5. Open your browser and navigate to `http://localhost:5000`
 
 The application uses a combined development server that serves both the backend API and frontend assets from the same port, making development simple and straightforward.
+
+#### Troubleshooting NODE_ENV Issues
+
+If you encounter NODE_ENV related errors when running the application:
+
+- **Windows users:** The `npm run dev` script uses Unix-style environment variable setting which doesn't work on Windows. Use the provided `node start-dev.js` script instead.
+  
+- **Environment variable persistence:** If you need the NODE_ENV to persist across multiple commands, set it according to your platform:
+  
+  - Windows (Command Prompt):
+    ```
+    set NODE_ENV=development
+    ```
+  
+  - Windows (PowerShell):
+    ```
+    $env:NODE_ENV = "development"
+    ```
+  
+  - Unix/Linux/Mac:
+    ```
+    export NODE_ENV=development
+    ```
+
+- **Production deployment:** For production environments, you can use `node start-prod.js` to ensure NODE_ENV is set correctly.
 
 ### Production Deployment
 
